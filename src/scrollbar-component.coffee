@@ -37,9 +37,12 @@ class ScrollbarComponent
         @domNode.style.display = ''
       else
         @domNode.style.display = 'none'
+        @oldState.scrollTop = @oldState.scrollLeft = 0
       @oldState.visible = @newState.visible
 
   updateVertical: ->
+    return unless @newState.visible
+
     if @newState.width isnt @oldState.width
       @domNode.style.width = @newState.width + 'px'
       @oldState.width = @newState.width
@@ -57,6 +60,8 @@ class ScrollbarComponent
       @oldState.scrollTop = @newState.scrollTop
 
   updateHorizontal: ->
+    return unless @newState.visible
+
     if @newState.height isnt @oldState.height
       @domNode.style.height = @newState.height + 'px'
       @oldState.height = @newState.height
