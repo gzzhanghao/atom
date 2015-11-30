@@ -3094,6 +3094,20 @@ describe('TextEditorComponent', function () {
       expect(verticalScrollbarNode.scrollTop).toBe(10)
     })
 
+    it('updates the vertical scrollbar when the visible is changed in the model', async function () {
+      wrapperNode.style.display = 'none'
+      component.checkForVisibilityChange()
+      wrapperNode.style.height = 4.5 * lineHeightInPixels + 'px'
+      component.measureDimensions()
+      await nextViewUpdatePromise()
+      expect(verticalScrollbarNode.scrollTop).toBe(0)
+      wrapperNode.style.display = ''
+      component.checkForVisibilityChange()
+      wrapperNode.setScrollTop(10)
+      await nextViewUpdatePromise()
+      expect(verticalScrollbarNode.scrollTop).toBe(10)
+    })
+
     it('updates the horizontal scrollbar and the x transform of the lines based on the scrollLeft of the model', async function () {
       componentNode.style.width = 30 * charWidth + 'px'
       component.measureDimensions()
